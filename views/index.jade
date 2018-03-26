@@ -1,0 +1,71 @@
+extends layout
+
+block content
+	h1= title
+	p Welcome to #{title}
+
+	h2 End points
+
+	h3 Storage
+	ul#endpoints
+		li: h3 /api/storage/metrics
+		#container.col
+				p Method: POST
+				em
+					| {
+					| "filters":{"type": ["bus"]},
+					| "group_by": [
+					| "district"
+					| ],
+					| "aggregators": [
+					| {
+					| "name": "speed",
+					| "order": "desc",
+					| "aggregation": {
+					| "name": "avg",
+					| "sampling": {
+					| "value": 10,
+					| "unit": "minutes"
+					| }
+					| }
+					| }
+					| ],
+					| "timeframe": {
+					| "end_relative": {
+					| "value": "1",
+					| "unit": "seconds"
+					| },
+					| "start_relative":{
+					| "value": "1",
+					| "unit": "days"
+					| }
+					| }
+					| }
+		li: h3 /api/storage/rawdata
+		#container.col
+			p Method: POST
+			em
+			| {
+			|	"entityid": "urn.x-iot.smartsantander.1.3009",
+			|	"timeframe": {
+			|		"end_absolute": 1452981738000,
+			|		"start_relative":{
+			|		       "value": "1",
+			|		       "unit": "days"
+			|		}
+			|	}
+			| }
+
+	h3 NGSI broker
+
+	li: h3 /api/broker/* 
+	#container.col
+		p See fiware orion API documentation for more information on this point
+		a(href='https://fiware-orion.readthedocs.org/en/develop/') Orion API doc
+
+	h3 NGSI CEP
+
+	li: h3 /api/cep/* 
+	#container.col
+		p See fiware cepheus API documentation for more information on this point
+		a(href='https://fiware-cepheus.readthedocs.org/en/latest/') Cepheus API doc

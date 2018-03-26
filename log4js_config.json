@@ -1,0 +1,15 @@
+{
+    "appenders": {
+        "out": { "type": "console" },
+        "broker": {
+            "type": "file",
+            "filename": "logs/server.log",
+            "maxLogSize": 102400,
+            "compress": true,
+            "json": false        
+        }
+    },
+    "categories": {
+        "default": { "appenders": [ "out", "index" ], "level": "info" }        
+    }
+}
