@@ -20,7 +20,11 @@
     "kairosdb": "0.0.3",
     "log4js": "^2.3.12",
     "morgan": "~1.6.1",
+    "mysql": "^2.15.0",
+    "mysql-model": "0.0.3",
+    "q": "^1.5.1",
     "regex-email": "^1.0.2",
+    "schema-object": "^4.0.11",
     "serve-favicon": "~2.3.0",
     "sync-request": "^4.1.0"
   },

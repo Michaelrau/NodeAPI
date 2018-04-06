@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var config = require('./config');
 
 var index = require('./routes/index');
+var apiMessages = require('./routes/apiMessages');
 var api_ts = require('./routes/api-timeseries');
 var path = require('path');
 
@@ -17,11 +18,9 @@ var app = express();
 app.use(cors());
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views/angular/src'));
+app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
-// app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -43,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Core routes
 app.use('/', index);
+app.use('/api/messages', apiMessages);
 // app.use('/api/storage', api_ts);
 
 //Now load dynamic plugins
@@ -69,10 +69,14 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'dev') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    // res.render('error', {
+    //   message: err.message,
+    //   error: err
+    // });
+    res.json({
       message: err.message,
-      error: err
-    });
+      error: {}
+  });
   });
 }
 
@@ -80,9 +84,13 @@ if (app.get('env') === 'dev') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
+  // res.render('error', {
+  //   message: err.message,
+  //   error: {}
+  // });
+  res.json({
+      message: err.message,
+      error: {}
   });
 });
 
